@@ -1,6 +1,6 @@
 package net.minheur.technoluncher;
 
-public class Main {
+public class TechnoLuncher {
     public static void main(String[] args) {
 
     }

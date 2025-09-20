@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+}
+
+group = "net.minheur.technoluncher"
+version = 'beta-1.0'
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'net.minheur.potoflux.PotoFlux'
+        )
+    }
+}
+
+build.dependsOn jar

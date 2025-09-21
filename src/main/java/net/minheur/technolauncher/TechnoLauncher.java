@@ -1,9 +1,12 @@
 package net.minheur.technolauncher;
 
+import net.minheur.technolauncher.tabs.PotoFluxTab;
+import net.minheur.technolauncher.tabs.TechnoMasteryModpackTab;
+
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.function.Supplier;
 
 public class TechnoLauncher {
 
@@ -11,19 +14,28 @@ public class TechnoLauncher {
 
     public TechnoLauncher() {
         frame = new JFrame("TechnoLuncher");
-        frame.setSize(400, 200);
+        frame.setSize(854, 512);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-
-        JLabel label = new JLabel("Bienvenu dans PotoFlux", SwingConstants.CENTER);
-        frame.add(label, BorderLayout.CENTER);
-
-        JButton startButton = new JButton("Lancer PotoFlux" );
-        startButton.addActionListener(e -> checkJavaAndLaunch());
-        frame.add(startButton, BorderLayout.SOUTH);
-
         frame.setLocationRelativeTo(null);
+        frame.setResizable(false);
+
+        addPanels();
+
         frame.setVisible(true);
+    }
+
+    private void addPanels() {
+        JTabbedPane tabs = new JTabbedPane(JTabbedPane.LEFT);
+        tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+
+        tabs.add("TechnoMastery", getTabPanel(TechnoMasteryModpackTab::new));
+        tabs.add("PotoFlux", getTabPanel(PotoFluxTab::new));
+
+        frame.add(tabs);
+    }
+
+    private JPanel getTabPanel(Supplier<LauncherTab> tab) {
+        return tab.get().getPanel();
     }
 
     private void checkJavaAndLaunch() {
@@ -55,8 +67,7 @@ public class TechnoLauncher {
     }
 
     private void downloadAndInstallJava() {
-        JOptionPane.showMessageDialog(frame, "Place link to install java !");
-        // TODO: download & install
+        JOptionPane.showMessageDialog(frame, "Place link to install java !"); // TODO: download & install
     }
 
     private void launchJar() {

@@ -29,7 +29,7 @@ public class TechnoMasteryModpackTab extends LauncherTab {
                 Desktop.getDesktop().browse(new URI("https://www.curseforge.com/minecraft/modpacks/techno-mastery"));
             } catch (Exception ex) {
                 ex.printStackTrace();
-                JOptionPane.showMessageDialog(PANEL, "impossible d'ouvrir CurseForge ou la page web !");
+                JOptionPane.showMessageDialog(PANEL, "Impossible d'ouvrir CurseForge !");
             }
 
         });

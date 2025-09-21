@@ -1,13 +1,12 @@
-package net.minheur.technolauncher;
+package net.minheur.technolauncher.tabs;
 
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class LauncherTab {
     protected final JPanel PANEL = new JPanel();
 
     public LauncherTab() {
-        // PANEL.setBackground(Color.DARK_GRAY);
+        PANEL.setLayout(new BoxLayout(PANEL, BoxLayout.Y_AXIS));
         setPanel();
     }
 

@@ -1,11 +1,17 @@
 package net.minheur.technolauncher;
 
+import net.minheur.technolauncher.tabs.LauncherTab;
 import net.minheur.technolauncher.tabs.PotoFluxTab;
+import net.minheur.technolauncher.tabs.Tabs;
 import net.minheur.technolauncher.tabs.TechnoMasteryModpackTab;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class TechnoLauncher {
@@ -19,51 +25,31 @@ public class TechnoLauncher {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
 
+        addIcon();
         addPanels();
 
         frame.setVisible(true);
+    }
+
+    private void addIcon() {
+        Image icon600 = new ImageIcon(Objects.requireNonNull(getClass().getResource("/textures/main.png"))).getImage();
+        List<Image> icons = new ArrayList<>();
+        icons.add(icon600.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+        icons.add(icon600.getScaledInstance(32, 32, Image.SCALE_SMOOTH));
+        icons.add(icon600.getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+        frame.setIconImages(icons);
     }
 
     private void addPanels() {
         JTabbedPane tabs = new JTabbedPane(JTabbedPane.LEFT);
         tabs.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
 
-        tabs.add("TechnoMastery", getTabPanel(TechnoMasteryModpackTab::new));
-        tabs.add("PotoFlux", getTabPanel(PotoFluxTab::new));
+        for (Tabs tab : Tabs.values()) {
+            LauncherTab instance = tab.createInstance();
+            if (instance != null) tabs.add(tab.getName(), instance.getPanel());
+        }
 
         frame.add(tabs);
-    }
-
-    private JPanel getTabPanel(Supplier<LauncherTab> tab) {
-        return tab.get().getPanel();
-    }
-
-    private void checkJavaAndLaunch() {
-        if (!isJavaVersionSufficient()) {
-            int result = JOptionPane.showConfirmDialog(frame,
-                    "Java 21 ou supérieur n'est pas installé. Voulez-vous l'installer ?",
-                    "Java manquant",
-                    JOptionPane.YES_NO_OPTION);
-            if (result == JOptionPane.YES_OPTION) {
-                downloadAndInstallJava();
-            }
-        } else {
-            launchJar();
-        }
-    }
-
-    private boolean isJavaVersionSufficient() {
-        String version = System.getProperty("java.version");
-        int major = parseMajorVersion(version);
-        return major >= 17;
-    }
-
-    private int parseMajorVersion(String version) {
-        if (version.startsWith("1.")) {
-            return Integer.parseInt(version.split("\\.")[1]);
-        } else {
-            return Integer.parseInt(version.split("\\.")[0]);
-        }
     }
 
     private void downloadAndInstallJava() {

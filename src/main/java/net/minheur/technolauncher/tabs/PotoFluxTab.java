@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 public class PotoFluxTab extends LauncherTab {
 
@@ -16,12 +17,35 @@ public class PotoFluxTab extends LauncherTab {
     }
 
     private JButton createDlRunButton() {
-        JButton downloadButton = new JButton("Download / Install PotoFlux");
-        downloadButton.addActionListener(e -> {
-            checkJavaAndLaunch();
-        });
+        JButton downloadButton;
+
+        if (getPotoFluxJar().exists()) { // set button to run mod if installed
+            downloadButton = new JButton("Run PotoFlux");
+            downloadButton.addActionListener(e -> {
+                checkJavaAndLaunch();
+            });
+        } else { // else ask to download it
+            downloadButton = new JButton("Download PotoFlux");
+            downloadButton.addActionListener(e -> {
+                dlPotoFlux();
+            });
+        }
         downloadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         return  downloadButton;
+    }
+
+    private void dlPotoFlux() {
+        int dl = JOptionPane.showConfirmDialog(null, "Voulez vous télécharger PotoFlux ?",
+                "Téléchargement de PotoFlux",
+                JOptionPane.OK_CANCEL_OPTION);
+        if (dl == JOptionPane.YES_OPTION) {
+            try {
+                Desktop.getDesktop().browse(new URI("https://github.com/TechnoMastery/PotoFlux/releases"));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(PANEL, "Impossible d'ouvrir la page de téléchargement de PotoFlux !");
+            }
+        }
     }
 
     private JLabel createTitle() {
@@ -64,18 +88,21 @@ public class PotoFluxTab extends LauncherTab {
 
     private void launchJar() {
         try {
-            File jarFile = new File("C:\\Program Files\\TechnoMastery\\potoflux\\PotoFlux.jar");
-            if (!jarFile.exists()) {
+            if (!getPotoFluxJar().exists()) {
                 JOptionPane.showMessageDialog(null, "Fichier potoflux introuvable ! Merci de signalez ceci aux admins.");
                 return;
             }
 
             // run jar
-            ProcessBuilder pb = new ProcessBuilder("java", "-jar", jarFile.getAbsolutePath());
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", getPotoFluxJar().getAbsolutePath());
             pb.start();
         } catch (IOException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erreur de lancement : " + ex.getMessage());
         }
+    }
+
+    private File getPotoFluxJar() {
+        return new File("C:\\Program Files\\TechnoMastery\\potoflux\\PotoFlux.jar");
     }
 }

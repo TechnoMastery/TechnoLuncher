@@ -2,6 +2,8 @@ package net.minheur.technolauncher.tabs;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class PotoFluxTab extends LauncherTab {
 
@@ -14,6 +16,9 @@ public class PotoFluxTab extends LauncherTab {
 
         // button
         JButton downloadButton = new JButton("Download / Install PotoFlux");
+        downloadButton.addActionListener(e -> {
+            checkJavaAndLaunch();
+        });
         downloadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // progress bar
@@ -31,19 +36,18 @@ public class PotoFluxTab extends LauncherTab {
         PANEL.add(progressBar);
     }
 
-    // private void checkJavaAndLaunch() {
-    //     if (!isJavaVersionSufficient()) {
-    //         int result = JOptionPane.showConfirmDialog(frame,
-    //                 "Java 21 ou supérieur n'est pas installé. Voulez-vous l'installer ?",
-    //                 "Java manquant",
-    //                 JOptionPane.YES_NO_OPTION);
-    //         if (result == JOptionPane.YES_OPTION) {
-    //             downloadAndInstallJava();
-    //         }
-    //     } else {
-    //         launchJar();
-    //     }
-    // }
+    private void checkJavaAndLaunch() {
+        if (!isJavaVersionSufficient()) {
+            int result = JOptionPane.showConfirmDialog(null, "Java 21 ou supérieur n'est pas installé. Voulez-vous l'installer ?",
+                    "Java manquant",
+                    JOptionPane.YES_NO_OPTION);
+            if (result == JOptionPane.YES_OPTION) {
+                downloadAndInstallJava();
+            }
+        } else {
+            launchJar();
+        }
+    }
 
     private boolean isJavaVersionSufficient() {
         String version = System.getProperty("java.version");
@@ -56,6 +60,27 @@ public class PotoFluxTab extends LauncherTab {
             return Integer.parseInt(version.split("\\.")[1]);
         } else {
             return Integer.parseInt(version.split("\\.")[0]);
+        }
+    }
+
+    private void downloadAndInstallJava() {
+        JOptionPane.showMessageDialog(null, "Place link to install java !"); // TODO: download & install
+    }
+
+    private void launchJar() {
+        try {
+            File jarFile = new File("C:\\Program Files\\TechnoMastery\\potoflux\\PotoFlux.jar");
+            if (!jarFile.exists()) {
+                JOptionPane.showMessageDialog(null, "Fichier potoflux introuvable !");
+                return;
+            }
+
+            // run jar
+            ProcessBuilder pb = new ProcessBuilder("java", "-jar", jarFile.getAbsolutePath());
+            pb.start();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erreur de lancement : " + ex.getMessage());
         }
     }
 }

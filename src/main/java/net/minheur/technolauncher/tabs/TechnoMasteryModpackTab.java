@@ -8,12 +8,24 @@ public class TechnoMasteryModpackTab extends LauncherTab {
 
     @Override
     protected void setPanel() {
-        // title
+        JLabel title = createTitle();
+        JButton downloadButton = createDownloadButton();
+
+        // adds
+        PANEL.add(Box.createVerticalStrut(30));
+        PANEL.add(title);
+        PANEL.add(Box.createVerticalStrut(20));
+        PANEL.add(downloadButton);
+    }
+
+    private JLabel createTitle() {
         JLabel title = new JLabel("TechnoMastery");
         title.setFont(new Font("Consolas", Font.BOLD, 20));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return title;
+    }
 
-        // button
+    private JButton createDownloadButton() {
         JButton downloadButton = new JButton("Download TechnoMastery on curseforge");
         downloadButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         downloadButton.addActionListener(e -> {
@@ -25,11 +37,6 @@ public class TechnoMasteryModpackTab extends LauncherTab {
             }
 
         });
-
-        // adds
-        PANEL.add(Box.createVerticalStrut(30));
-        PANEL.add(title);
-        PANEL.add(Box.createVerticalStrut(20));
-        PANEL.add(downloadButton);
+        return downloadButton;
     }
 }

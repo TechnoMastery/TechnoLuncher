@@ -1,15 +1,15 @@
-package net.minheur.technoluncher;
+package net.minheur.technolauncher;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class TechnoLuncher {
+public class TechnoLauncher {
 
-    private JFrame frame;
+    private final JFrame frame;
 
-    public TechnoLuncher() {
+    public TechnoLauncher() {
         frame = new JFrame("TechnoLuncher");
         frame.setSize(400, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,7 +77,7 @@ public class TechnoLuncher {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(TechnoLuncher::new);
+        SwingUtilities.invokeLater(TechnoLauncher::new);
     }
 
 

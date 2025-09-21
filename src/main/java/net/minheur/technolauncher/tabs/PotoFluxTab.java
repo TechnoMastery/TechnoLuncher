@@ -103,6 +103,6 @@ public class PotoFluxTab extends LauncherTab {
     }
 
     private File getPotoFluxJar() {
-        return new File("C:\\Program Files\\TechnoMastery\\potoflux\\PotoFlux.jar");
+        return new File("C:\\Program Files\\TechnoMastery\\PotoFlux\\PotoFlux.jar");
     }
 }

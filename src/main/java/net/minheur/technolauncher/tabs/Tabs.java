@@ -3,6 +3,8 @@ package net.minheur.technolauncher.tabs;
 import javax.swing.*;
 
 public enum Tabs {
+    // note : l'ordre de l'enum ici est celui des tabs
+    MAIN("Home", HomeTab.class),
     POTO_FLUX("PotoFlux", PotoFluxTab.class),
     TECHNO_MASTERY_MODPACK("TechnoMastery", TechnoMasteryModpackTab.class);
 

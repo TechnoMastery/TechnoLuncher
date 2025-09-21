@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class TechnoLauncher {
+    public static final PropertiesGetter props = new PropertiesGetter();
 
     private final JFrame frame;
 

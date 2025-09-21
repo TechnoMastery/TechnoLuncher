@@ -18,8 +18,16 @@ dependencies {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'net.minheur.technolauncher.TechnoLauncher'
+                'Main-Class': 'net.minheur.technolauncher.TechnoLauncher',
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
         )
+    }
+}
+
+processResources {
+    filesMatching("version.properties") {
+        expand "version": version
     }
 }
 

@@ -8,14 +8,10 @@ public class TechnoMasteryModpackTab extends LauncherTab {
 
     @Override
     protected void setPanel() {
-        JLabel title = createTitle();
-        JButton downloadButton = createDownloadButton();
-
-        // adds
         PANEL.add(Box.createVerticalStrut(30));
-        PANEL.add(title);
+        PANEL.add(createTitle());
         PANEL.add(Box.createVerticalStrut(20));
-        PANEL.add(downloadButton);
+        PANEL.add(createDownloadButton());
     }
 
     private JLabel createTitle() {
